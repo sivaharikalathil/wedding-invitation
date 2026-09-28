@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 40" fill="none">
+  <!-- Traditional Kasavu Zari Border Pattern -->
+  <defs>
+    <linearGradient id="kasavuGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#AA771C" />
+      <stop offset="25%" stop-color="#FFE082" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="75%" stop-color="#FFE082" />
+      <stop offset="100%" stop-color="#AA771C" />
+    </linearGradient>
+  </defs>
+
+  <!-- Top hairline -->
+  <line x1="0" y1="4" x2="400" y2="4" stroke="url(#kasavuGold)" stroke-width="1.5"/>
+  <!-- Second line -->
+  <line x1="0" y1="8" x2="400" y2="8" stroke="url(#kasavuGold)" stroke-width="1"/>
+
+  <!-- Repeating diamond & temple gopuram motif -->
+  <g fill="url(#kasavuGold)">
+    <!-- Diamonds repeated across 400px -->
+    <polygon points="10,20 20,12 30,20 20,28" />
+    <polygon points="35,20 40,16 45,20 40,24" />
+    <polygon points="50,20 60,12 70,20 60,28" />
+    <polygon points="75,20 80,16 85,20 80,24" />
+    <polygon points="90,20 100,12 110,20 100,28" />
+    <polygon points="115,20 120,16 125,20 120,24" />
+    <polygon points="130,20 140,12 150,20 140,28" />
+    <polygon points="155,20 160,16 165,20 160,24" />
+    <polygon points="170,20 180,12 190,20 180,28" />
+    <polygon points="195,20 200,16 205,20 200,24" />
+    <polygon points="210,20 220,12 230,20 220,28" />
+    <polygon points="235,20 240,16 245,20 240,24" />
+    <polygon points="250,20 260,12 270,20 260,28" />
+    <polygon points="275,20 280,16 285,20 280,24" />
+    <polygon points="290,20 300,12 310,20 300,28" />
+    <polygon points="315,20 320,16 325,20 320,24" />
+    <polygon points="330,20 340,12 350,20 340,28" />
+    <polygon points="355,20 360,16 365,20 360,24" />
+    <polygon points="370,20 380,12 390,20 380,28" />
+  </g>
+
+  <!-- Bottom lines -->
+  <line x1="0" y1="32" x2="400" y2="32" stroke="url(#kasavuGold)" stroke-width="1"/>
+  <line x1="0" y1="36" x2="400" y2="36" stroke="url(#kasavuGold)" stroke-width="1.5"/>
+</svg>

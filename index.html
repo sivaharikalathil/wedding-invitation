@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation | Siva & Vidya | ശുഭ വിവാഹം</title>
+  
+  <!-- Meta tags for rich WhatsApp and social sharing preview -->
+  <meta name="description" content="You are cordially invited to celebrate the traditional Kerala Hindu Wedding of Siva & Vidya at Manarcaud.">
+  <meta property="og:title" content="Wedding Invitation: Siva & Vidya | ശുഭ വിവാഹം">
+  <meta property="og:description" content="We joyfully invite you to join us on Sunday, 22nd November 2026 at Ave Maria Event Centre - Premier Auditorium & Banquet Hall, Manarcaud.">
+  <meta property="og:image" content="assets/images/hero.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/decor/ganesha.svg">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="cover-active">
+
+  <!-- Realistic Petals Canvas (Jasmine & Marigold Pushpavrishi) -->
+  <canvas id="petals-canvas"></canvas>
+
+  <!-- ========================================================================
+       COVER SCREEN OVERLAY (VIRAL ENVELOPE / GATE OPENING EXPERIENCE)
+       ======================================================================== -->
+  <div id="cover-overlay">
+    <img src="assets/images/hero.jpg" alt="Kerala Wedding" class="cover-bg-image">
+
+    <div class="cover-card">
+      <!-- Traditional Kasavu Ornaments in Corners -->
+      <div class="cover-kasavu-corner top-left"></div>
+      <div class="cover-kasavu-corner top-right"></div>
+      <div class="cover-kasavu-corner bottom-left"></div>
+      <div class="cover-kasavu-corner bottom-right"></div>
+
+      <!-- Auspicious Lord Ganesha Emblem -->
+      <img src="assets/images/decor/ganesha.svg" alt="Lord Ganesha" class="cover-ganesha-icon">
+      <div class="cover-shloka">ഓം ശ്രീ ഗണേശായ നമഃ</div>
+
+      <div class="cover-subtitle">WEDDING INVITATION</div>
+      <div class="cover-shloka" style="font-size: 1.1rem; margin-bottom: 4px;">വിവാഹ ക്ഷണക്കത്ത്</div>
+
+      <!-- Couple Names -->
+      <h1 class="cover-couple-title">
+        <span class="groom-name-text">Siva Hari</span>
+        <span>&</span>
+        <span class="bride-name-text">Vidya Vijayan</span>
+      </h1>
+
+      <div class="cover-date-pill">
+        <i class="fa-regular fa-calendar-days text-gold" style="margin-right: 6px;"></i> Sunday, 22 Nov 2026
+      </div>
+
+      <!-- Personalized Guest Tag (Powered by URL ?to=GuestName) -->
+      <div class="cover-guest-box">
+        <div class="cover-guest-label">Specially Invited</div>
+        <div class="cover-guest-name" id="cover-guest-name">Valued Guest & Family</div>
+        <div class="cover-guest-sub">ഞങ്ങളുടെ വിവാഹത്തിലേക്ക് താങ്കളെയും കുടുംബത്തെയും സ്നേഹപൂർവ്വം ക്ഷണിക്കുന്നു.</div>
+      </div>
+
+      <!-- Open Invitation Action Button -->
+      <button class="btn-open-invite" onclick="openInvitation()">
+        <i class="fa-solid fa-envelope-open-text"></i>
+        <span>ക്ഷണക്കത്ത് തുറക്കുക / OPEN INVITATION</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FLOATING CONTROLS & NAVIGATION
+       ======================================================================== -->
+  <!-- Floating Audio & Flower Shower Toggle Controls -->
+  <div class="floating-side-controls">
+    <!-- Audio Toggle Disc -->
+    <button class="floating-music-btn" id="music-toggle-btn" onclick="toggleAudio()" title="Play/Mute Wedding Nadaswaram Music">
+      <i class="fa-solid fa-music"></i>
+    </button>
+    <!-- Flower Showering Toggle Button -->
+    <button class="floating-petals-btn active" id="petals-toggle-btn" onclick="togglePetals()" title="Disable Flower Showering">
+      <i class="fa-solid fa-spa"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Quick Action Nav Bar -->
+  <div class="floating-bottom-nav">
+    <a href="#couple-section">
+      <i class="fa-solid fa-heart"></i>
+      <span>Couple</span>
+    </a>
+    <a href="#events-section">
+      <i class="fa-regular fa-clock"></i>
+      <span>Schedule</span>
+    </a>
+    <a href="#venue-section">
+      <i class="fa-solid fa-location-dot"></i>
+      <span>Venue</span>
+    </a>
+    <a href="#wishes-section">
+      <i class="fa-regular fa-comment-dots"></i>
+      <span>Wishes</span>
+    </a>
+  </div>
+
+  <!-- ========================================================================
+       MAIN INVITATION WRAPPER
+       ======================================================================== -->
+  <main class="invitation-wrapper">
+
+    <!-- Top Kasavu Golden Border -->
+    <div class="kasavu-top-border"></div>
+
+    <!-- Auspicious Sloka Banner -->
+    <div class="auspicious-shloka-banner">
+      <div class="auspicious-shloka-text">
+        വക്രതുണ്ഡ മഹാകായ സൂര്യകോടി സമപ്രഭ | നിർവിഘ്നം കുരു മേ ദേവ സർവ്വ കാര്യേഷു സർവ്വദാ ||
+      </div>
+      <div class="auspicious-shloka-meaning">
+        "O Lord Ganesha, with curved trunk and brilliance of ten million suns, grant us freedom from obstacles in all our endeavors."
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         HERO SECTION
+         ====================================================================== -->
+    <section class="hero-section" id="hero-section">
+      <div class="hero-bg-wrapper">
+        <img src="assets/images/hero.jpg" alt="Kerala Wedding Mandapam" class="hero-bg-img">
+        <div class="hero-bg-overlay"></div>
+      </div>
+
+      <div class="hero-content">
+        <img src="assets/images/decor/nilavilakku.svg" alt="Nilavilakku" class="hero-nilavilakku">
+        
+        <div class="hero-pretitle">The Sacred Wedding Celebration Of</div>
+        
+        <h2 class="hero-couple-names">
+          <span class="groom-name-text">Siva Hari</span>
+          <span class="hero-ampersand">&</span>
+          <span class="bride-name-text">Vidya Vijayan</span>
+        </h2>
+
+        <!-- <div style="font-family: var(--font-malayalam); font-size: 1.25rem; font-weight: 700; color: var(--kerala-maroon); margin: 6px 0;">
+          സകുടുംബം സ്വാഗതം
+        </div> -->
+
+        <div class="hero-date-box">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span class="hero-date-text">SUNDAY, 22ND NOVEMBER 2026</span>
+        </div>
+
+        <div class="hero-venue-line">
+          <strong>Auspicious Muhurtham:</strong> 11:20 AM – 12:00 PM<br>
+          <strong>Venue:</strong> Ave Maria Event Centre - Premier Auditorium & Banquet Hall, Manarcaud, Kottayam
+        </div>
+      </div>
+    </section>
+
+    <!-- Kasavu Pattern Divider -->
+    <div style="text-align: center; margin: 20px 0;">
+      <img src="assets/images/decor/kasavu-pattern.svg" alt="Kasavu Border" style="max-width: 320px; opacity: 0.85;">
+    </div>
+
+    <!-- Auspicious Mangalyam Shloka Callout -->
+    <section style="padding: 40px 24px; text-align: center; background: var(--kerala-ivory);">
+      <div style="max-width: 740px; margin: 0 auto;">
+        <div style="font-family: var(--font-malayalam); font-size: 1.3rem; font-weight: 700; color: var(--kerala-maroon); line-height: 1.8;">
+          “മംഗല്യം തന്തുനാനേന മമ ജീവന ഹേതുനാ |<br>
+          കണ്ഠേ ബദ്ധ്നാമി ശുഭഗേ ത്വം ജീവ ശരദാം ശതം ||”
+        </div>
+        <p style="font-style: italic; font-family: 'Playfair Display', serif; color: var(--text-muted); font-size: 1rem; margin-top: 10px;">
+          “This sacred thread, the foundation of my life, I tie around your neck, O blessed one; may you live with me happily for a hundred autumns.”
+        </p>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         COUNTDOWN TIMER SECTION
+         ====================================================================== -->
+    <section class="section-padding countdown-section" id="countdown-section">
+      <div class="section-header">
+        <div class="section-tag"><i class="fa-solid fa-hourglass-half"></i> Countdown to Muhurtham</div>
+        <h3 class="section-title">The Sacred Hour Awaits</h3>
+        <p class="section-desc" id="timer-status-msg">Counting every blessed second until the auspicious Thalikettu ceremony</p>
+      </div>
+
+      <div class="timer-grid">
+        <div class="timer-unit-box">
+          <div class="timer-number" id="timer-days">00</div>
+          <div class="timer-label">Days</div>
+        </div>
+        <div class="timer-unit-box">
+          <div class="timer-number" id="timer-hours">00</div>
+          <div class="timer-label">Hours</div>
+        </div>
+        <div class="timer-unit-box">
+          <div class="timer-number" id="timer-mins">00</div>
+          <div class="timer-label">Minutes</div>
+        </div>
+        <div class="timer-unit-box">
+          <div class="timer-number" id="timer-secs">00</div>
+          <div class="timer-label">Seconds</div>
+        </div>
+      </div>
+
+      <div class="calendar-action-buttons">
+        <button class="btn-secondary" onclick="addToGoogleCalendar()">
+          <i class="fa-brands fa-google"></i> Add to Google Calendar
+        </button>
+        <!-- <button class="btn-secondary" onclick="downloadICalFile()">
+          <i class="fa-brands fa-apple"></i> Download Apple / Outlook iCal
+        </button> -->
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         BRIDE & GROOM PROFILES (VARATHAN & VADHU)
+         ====================================================================== -->
+    <section class="section-padding" id="couple-section">
+      <div class="section-header">
+        <!-- <div class="section-tag"><i class="fa-solid fa-heart"></i> The Couple</div> -->
+        <h3 class="section-title">The Groom & Bride</h3>
+        <p class="section-desc">Two families uniting with love and eternal traditional blessings</p>
+      </div>
+
+      <div class="couple-showcase-container">
+        <!-- Groom Card -->
+        <div class="couple-profile-card">
+          <div class="couple-avatar-frame">
+            <img src="assets/images/groom.jpg" alt="Groom - Anand Krishna" class="couple-avatar-img">
+          </div>
+          <div class="couple-role-tag">വരൻ (The Groom)</div>
+          <h4 class="couple-name groom-name-text">Siva Hari</h4>
+          <div class="couple-parents" id="conf-groom-parents">
+            Son of <strong>Sri. Harikuttan K</strong> & <strong>Smt. Shylaja Radhakrishnan</strong><br>
+            "Kousthubham", Thrissur, Kerala
+          </div>
+          <div class="couple-bio">
+            "A passionate software architect who finds tranquility in Carnatic violin notes and Kerala temple architecture."
+          </div>
+          <a href="#" class="couple-social-link"><i class="fa-brands fa-instagram"></i> @13.sivahari</a>
+        </div>
+
+        <!-- Center Sacred Thali Emblem -->
+        <div class="couple-center-divider">
+          <img src="assets/images/decor/thali.svg" alt="Thali Emblem" class="thali-emblem">
+          <div class="thali-text">മാംഗല്യം</div>
+          <div style="font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-deep);">United in Dharma</div>
+        </div>
+
+        <!-- Bride Card -->
+        <div class="couple-profile-card">
+          <div class="couple-avatar-frame">
+            <img src="assets/images/bride.jpg" alt="Bride - Parvathy Nair" class="couple-avatar-img">
+          </div>
+          <div class="couple-role-tag">വധു (The Bride)</div>
+          <h4 class="couple-name bride-name-text">Parvathy Nair</h4>
+          <div class="couple-parents" id="conf-bride-parents">
+            Daughter of <strong>Sri. M. Gopinathan</strong> & <strong>Smt. Latha Gopinathan</strong><br>
+            "Sreerangam", Thrippunithura, Ernakulam
+          </div>
+          <div class="couple-bio">
+            "A creative product designer and dedicated Bharatanatyam dancer dedicated to bringing Indian heritage alive."
+          </div>
+          <a href="#" class="couple-social-link"><i class="fa-brands fa-instagram"></i> @parvathy_nair</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         WEDDING EVENTS & SCHEDULE (CEREMONY ITINERARY)
+         ====================================================================== -->
+    <section class="section-padding events-section" id="events-section">
+      <div class="section-header">
+        <div class="section-tag"><i class="fa-regular fa-calendar"></i> Ceremony Itinerary</div>
+        <h3 class="section-title">വിവാഹ ചടങ്ങുകൾ (Sacred Events)</h3>
+        <p class="section-desc">Join us in each auspicious moment as we celebrate with Vedic traditions, joyful feasting, and music</p>
+      </div>
+
+      <div class="events-timeline">
+        <!-- Event 1: Thalikettu Kalyanam -->
+        <div class="event-card">
+          <div class="event-image-side">
+            <img src="assets/images/hero.jpg" alt="Thalikettu Ceremony">
+            <div class="event-badge">Auspicious Muhurtham</div>
+          </div>
+          <div class="event-content-side">
+            <div class="event-time-tag">
+              <i class="fa-regular fa-clock"></i> 09:30 AM – 10:15 AM
+            </div>
+            <h4 class="event-name">താലികെട്ട് കല്യാണം (Thalikettu Muhurtham)</h4>
+            <div class="event-malayalam-title">The Sacred Tying of the Mangalsutra & Pudavakoda</div>
+            <p class="event-desc">
+              The holy wedding ceremony performed amidst traditional Nadaswaram, exchange of fragrant floral garlands (Maala Maattal), sacred Pudavakoda, and elder blessings.
+            </p>
+            <div class="event-venue-info">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>Sree Krishna Kalyana Mandapam</strong><br>
+                West Nada, Guruvayur Temple, Thrissur
+              </div>
+            </div>
+            <div class="event-actions">
+              <button class="btn-secondary btn-sm" onclick="addToGoogleCalendar()">
+                <i class="fa-solid fa-calendar-plus"></i> Add Event
+              </button>
+              <a href="#venue-section" class="btn-secondary btn-sm">
+                <i class="fa-solid fa-diamond-turn-right"></i> View Map
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event 2: Traditional Kerala Sadhya -->
+        <div class="event-card">
+          <div class="event-image-side">
+            <img src="assets/images/sadhya.jpg" alt="Kerala Sadhya Feast">
+            <div class="event-badge">Grand Feast</div>
+          </div>
+          <div class="event-content-side">
+            <div class="event-time-tag">
+              <i class="fa-regular fa-clock"></i> 11:30 AM – 02:30 PM
+            </div>
+            <h4 class="event-name">പരമ്പരാഗത കേരള സദ്യ (Traditional Kerala Sadhya)</h4>
+            <div class="event-malayalam-title">The Authentic 28-Dish Banana Leaf Feast</div>
+            <p class="event-desc">
+              A royal culinary feast served on fresh green plantain leaves featuring Avial, Olan, Thoran, Kalan, Pachadi, Crispy Upperi, Pappadam, and traditional Palada Pradhaman Payasam.
+            </p>
+            <div class="event-venue-info">
+              <i class="fa-solid fa-utensils"></i>
+              <div>
+                <strong>Temple Dining Hall & Banquet Suites</strong><br>
+                Guruvayur, Thrissur
+              </div>
+            </div>
+            <div class="event-actions">
+              <span style="font-size:0.85rem; color: var(--kerala-maroon); font-weight: 600;">
+                <i class="fa-solid fa-leaf text-gold"></i> Pure Vegetarian Grand Feast
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event 3: Wedding Reception & Sangeeth -->
+        <div class="event-card">
+          <div class="event-image-side">
+            <img src="assets/images/backwaters.jpg" alt="Reception Celebration">
+            <div class="event-badge">Evening Gala</div>
+          </div>
+          <div class="event-content-side">
+            <div class="event-time-tag">
+              <i class="fa-regular fa-clock"></i> 06:00 PM – 10:00 PM
+            </div>
+            <h4 class="event-name">വിവാഹ സൽക്കാരം (Wedding Reception)</h4>
+            <div class="event-malayalam-title">Evening of Music, Joy & Feasting</div>
+            <p class="event-desc">
+              An enchanting evening with live Kerala acoustic fusion band, interactive celebrations, congratulatory greetings, and a lavish dinner.
+            </p>
+            <div class="event-venue-info">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>The Grand Palace Convention Centre</strong><br>
+                NH Bypass, Edappally, Kochi
+              </div>
+            </div>
+            <div class="event-actions">
+              <button class="btn-secondary btn-sm" onclick="addToGoogleCalendar()">
+                <i class="fa-solid fa-calendar-plus"></i> Add Event
+              </button>
+              <a href="#venue-section" class="btn-secondary btn-sm">
+                <i class="fa-solid fa-diamond-turn-right"></i> View Map
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VENUE & MAP INTEGRATION SECTION
+         ====================================================================== -->
+    <section class="section-padding venue-section" id="venue-section">
+      <div class="section-header">
+        <div class="section-tag"><i class="fa-solid fa-map-location-dot"></i> Map & Directions</div>
+        <h3 class="section-title">വേദി വിവരങ്ങൾ (Location & Venues)</h3>
+        <p class="section-desc">Interactive directions and venue guides for your comfortable journey</p>
+      </div>
+
+      <div class="venue-card">
+        <!-- Venue Switcher Tabs -->
+        <div class="venue-tabs">
+          <button class="venue-tab-btn active" data-venue="mandapam">
+            <i class="fa-solid fa-gopuram"></i> Guruvayur Mandapam (Wedding & Sadhya)
+          </button>
+          <button class="venue-tab-btn" data-venue="reception">
+            <i class="fa-solid fa-champagne-glasses"></i> Kochi Convention Centre (Reception)
+          </button>
+        </div>
+
+        <div class="venue-body">
+          <!-- Mandapam View -->
+          <div id="venue-mandapam-view">
+            <div class="venue-details-grid">
+              <div class="venue-info-box">
+                <h4>Sree Krishna Kalyana Mandapam</h4>
+                <p>
+                  <strong>Address:</strong> West Nada, Near Sree Krishna Swamy Temple, Guruvayur, Thrissur District, Kerala - 680101.<br>
+                  <strong>Landmark:</strong> 250 meters from Guruvayur Temple West Gate.<br>
+                  <strong>Valet Parking:</strong> Available at Temple West Ground.
+                </p>
+              </div>
+
+              <div class="venue-info-box">
+                <h4>Travel & Transit Information</h4>
+                <p>
+                  ✈️ <strong>Nearest Airport:</strong> Cochin International Airport (COK) - 78 km.<br>
+                  🚆 <strong>Nearest Railway:</strong> Guruvayur Railway Station (GUV) - 1.2 km / Thrissur Junction (TCR) - 26 km.<br>
+                  🚖 <strong>Taxis & Autos:</strong> 24x7 available right outside the venue.
+                </p>
+              </div>
+            </div>
+
+            <div class="venue-map-container">
+              <iframe 
+                title="Guruvayur Temple Mandapam Map"
+                src="https://maps.google.com/maps?q=Guruvayur+Temple+West+Nada+Thrissur&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                allowfullscreen="" 
+                loading="lazy">
+              </iframe>
+            </div>
+
+            <div class="venue-buttons-row">
+              <a href="https://maps.google.com/?q=Guruvayur+Temple+West+Nada+Thrissur" target="_blank" class="btn-primary" style="width: auto;">
+                <i class="fa-solid fa-diamond-turn-right"></i> Open in Google Maps
+              </a>
+              <button class="btn-secondary" onclick="copyAddress('Sree Krishna Kalyana Mandapam, West Nada, Near Temple, Guruvayur, Thrissur 680101')">
+                <i class="fa-regular fa-copy"></i> Copy Address
+              </button>
+            </div>
+          </div>
+
+          <!-- Reception View -->
+          <div id="venue-reception-view" style="display: none;">
+            <div class="venue-details-grid">
+              <div class="venue-info-box">
+                <h4>The Grand Palace Convention Centre</h4>
+                <p>
+                  <strong>Address:</strong> NH 66 Bypass, Near Lulu Mall Junction, Edappally, Kochi, Kerala - 682024.<br>
+                  <strong>Landmark:</strong> Adjacent to Edappally Metro Station.<br>
+                  <strong>Valet Parking:</strong> Multi-level valet parking facility.
+                </p>
+              </div>
+
+              <div class="venue-info-box">
+                <h4>Transit & Metro Access</h4>
+                <p>
+                  🚇 <strong>Kochi Metro:</strong> Edappally Metro Station (3 mins walk).<br>
+                  ✈️ <strong>Nearest Airport:</strong> Cochin International Airport (COK) - 22 km.<br>
+                  🚆 <strong>Nearest Railway:</strong> Ernakulam Town (ERN) - 6 km / Ernakulam Junction (ERS) - 8 km.
+                </p>
+              </div>
+            </div>
+
+            <div class="venue-map-container">
+              <iframe 
+                title="Kochi Convention Centre Map"
+                src="https://maps.google.com/maps?q=Edappally+Kochi+Kerala&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                allowfullscreen="" 
+                loading="lazy">
+              </iframe>
+            </div>
+
+            <div class="venue-buttons-row">
+              <a href="https://maps.google.com/?q=Edappally+Kochi+Kerala" target="_blank" class="btn-primary" style="width: auto;">
+                <i class="fa-solid fa-diamond-turn-right"></i> Open in Google Maps
+              </a>
+              <button class="btn-secondary" onclick="copyAddress('The Grand Palace Convention Centre, NH 66 Bypass, Edappally, Kochi 682024')">
+                <i class="fa-regular fa-copy"></i> Copy Address
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         WISHES & BLESSINGS GUESTBOOK WALL
+         ====================================================================== -->
+    <section class="section-padding wishes-section" id="wishes-section">
+      <div class="section-header">
+        <div class="section-tag"><i class="fa-solid fa-comments"></i> Guestbook</div>
+        <h3 class="section-title">ആശംസകൾ (Wishes & Blessings)</h3>
+        <p class="section-desc">Heartfelt words and auspicious blessings for the newlyweds</p>
+      </div>
+
+      <!-- Live Wishes Stream -->
+      <div class="wishes-stream-container" id="wishes-stream">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+
+      <!-- Quick Wish Submission -->
+      <div style="max-width: 720px; margin: 30px auto 0; background: var(--kerala-cream); padding: 24px; border-radius: var(--radius-md); border: 1px solid rgba(212,175,55,0.3);">
+        <h4 style="font-family: 'Cinzel', serif; color: var(--kerala-maroon); margin-bottom: 12px; font-size: 1.1rem;">
+          Leave a Blessing on the Wall
+        </h4>
+        <form id="quick-wish-form" style="display: flex; flex-direction: column; gap: 12px;">
+          <input type="text" id="wish-author-input" class="rsvp-input" placeholder="Your Name" required>
+          <textarea id="wish-text-input" rows="2" class="rsvp-textarea" placeholder="Write your auspicious blessing or message..." required></textarea>
+          <button type="submit" class="btn-primary" style="width: auto; align-self: flex-start;">
+            <i class="fa-solid fa-heart"></i> Post Blessing
+          </button>
+        </form>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- ========================================================================
+       MODALS: LIGHTBOX & SITE CUSTOMIZER
+       ======================================================================== -->
+
+
+
+  <!-- 4. Site Customizer Modal (Easy In-Browser Editing) -->
+  <div class="app-modal" id="customizer-modal">
+    <div class="app-modal-dialog">
+      <button class="app-modal-close" onclick="closeModal('customizer-modal')">&times;</button>
+      <h3 style="font-family: 'Cinzel', serif; color: var(--kerala-maroon); font-size: 1.5rem; margin-bottom: 8px;">
+        <i class="fa-solid fa-sliders text-gold"></i> Customize Wedding Details
+      </h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px;">
+        Personalize names, venues, and UPI details for your wedding without touching any code.
+      </p>
+
+      <form id="site-customizer-form">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+          <div>
+            <label class="rsvp-label">Groom Name</label>
+            <input type="text" id="cust-groom-name" class="rsvp-input">
+          </div>
+          <div>
+            <label class="rsvp-label">Bride Name</label>
+            <input type="text" id="cust-bride-name" class="rsvp-input">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="rsvp-label">Groom's Parents & Place</label>
+          <input type="text" id="cust-groom-parents" class="rsvp-input">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="rsvp-label">Bride's Parents & Place</label>
+          <input type="text" id="cust-bride-parents" class="rsvp-input">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="rsvp-label">Mandapam Venue Name</label>
+          <input type="text" id="cust-mandapam-name" class="rsvp-input">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label class="rsvp-label">Mandapam Address</label>
+          <input type="text" id="cust-mandapam-addr" class="rsvp-input">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label class="rsvp-label">UPI ID for Kaineettam / Shagun</label>
+          <input type="text" id="cust-upi" class="rsvp-input">
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button type="button" class="btn-secondary" onclick="resetCustomizerDefaults()">
+            Reset Defaults
+          </button>
+          <button type="submit" class="btn-primary" style="width: auto;">
+            Save & Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="app-toast" id="app-toast">Notification Message</div>
+
+  <!-- Main JavaScript File -->
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Sacred Kerala Ela Thali / Minnu Motif -->
+  <defs>
+    <linearGradient id="thaliGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA771C" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sacred yellow thread / golden chain arch -->
+  <path d="M 10 30 Q 50 45 90 30" stroke="#E65100" stroke-width="3" stroke-dasharray="2 2" fill="none"/>
+  <path d="M 10 30 Q 50 45 90 30" stroke="url(#thaliGold)" stroke-width="2" fill="none"/>
+
+  <!-- Suspension loop -->
+  <circle cx="50" cy="38" r="4.5" stroke="url(#thaliGold)" stroke-width="2" fill="none"/>
+
+  <!-- Leaf-shaped Sacred Thali (Ela Thali) -->
+  <path d="M 50 42 C 40 46 32 58 35 72 C 37 80 45 90 50 94 C 55 90 63 80 65 72 C 68 58 60 46 50 42 Z" 
+        fill="url(#thaliGold)" stroke="#805A10" stroke-width="1.5"/>
+
+  <!-- Sacred embossing / dots on Thali -->
+  <circle cx="50" cy="55" r="2.5" fill="#FFE082" stroke="#805A10" stroke-width="0.5"/>
+  <circle cx="50" cy="66" r="3.5" fill="#FFE082" stroke="#805A10" stroke-width="0.5"/>
+  <circle cx="50" cy="78" r="2.5" fill="#FFE082" stroke="#805A10" stroke-width="0.5"/>
+  <circle cx="43" cy="66" r="2" fill="#FFE082" stroke="#805A10" stroke-width="0.5"/>
+  <circle cx="57" cy="66" r="2" fill="#FFE082" stroke="#805A10" stroke-width="0.5"/>
+</svg>
