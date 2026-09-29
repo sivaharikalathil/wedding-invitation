@@ -428,10 +428,14 @@ body.cover-active {
   position: fixed;
   bottom: 24px;
   left: 24px;
-  z-index: 999;
+  z-index: 10001;
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.cover-active #petals-toggle-btn {
+  display: none;
 }
 
 @media (max-width: 768px) {
