@@ -517,6 +517,94 @@
         </form>
       </div>
     </section>
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import {
+    getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+  // Paste the config object Firebase gave you when you registered your web app
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById('quick-wish-form');
+  const nameInput = document.getElementById('wish-author-input');
+  const msgInput = document.getElementById('wish-text-input');
+  const stream = document.getElementById('wishes-stream');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  // --- Post a new blessing ---
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = nameInput.value.trim();
+    const message = msgInput.value.trim();
+    if (!name || !message) return;
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Posting...';
+
+    try {
+      await addDoc(collection(db, 'wishes'), {
+        name,
+        message,
+        createdAt: serverTimestamp()
+      });
+      form.reset();
+    } catch (err) {
+      console.error('Could not post wish:', err);
+      alert('Sorry, your blessing could not be posted. Please try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fa-solid fa-heart"></i> Post Blessing';
+    }
+  });
+
+  // --- Stream all blessings live, newest first ---
+  const q = query(collection(db, 'wishes'), orderBy('createdAt', 'desc'));
+
+  onSnapshot(q, (snapshot) => {
+    stream.innerHTML = '';
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const when = data.createdAt
+        ? data.createdAt.toDate().toLocaleDateString(undefined, { day: 'numeric', month: 'short' })
+        : 'Just now';
+
+      const card = document.createElement('div');
+      card.style.cssText = `
+        background: var(--kerala-cream);
+        border: 1px solid rgba(212,175,55,0.3);
+        border-radius: var(--radius-md);
+        padding: 16px 20px;
+        margin-bottom: 14px;
+      `;
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;">
+          <strong style="font-family:'Cinzel', serif; color: var(--kerala-maroon);">${escapeHtml(data.name)}</strong>
+          <span style="font-size:0.8rem; opacity:0.6;">${when}</span>
+        </div>
+        <p style="margin:0; line-height:1.5;">${escapeHtml(data.message)}</p>
+      `;
+      stream.appendChild(card);
+    });
+  });
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+</script>
+    
 
 
   </main>
