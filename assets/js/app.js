@@ -164,7 +164,7 @@ window.toggleAudio = toggleAudio;
 
 function initializeWeddingAudio() {
   if (!weddingAudio) {
-    weddingAudio = new Audio("assets/audio/Seetha Kalyana Vaibhogame Agam Violin Harisankar Varma Walk of the Bride @agamtheband.mp3");
+    weddingAudio = new Audio("assets/audio/Seetha Kalyana Vaibhogame Agam Violin Harisankar Varma Walk of the Bride @agamtheband.mp3?v=06520c2");
     weddingAudio.loop = true;
     weddingAudio.volume = 0.28;
     weddingAudio.preload = "auto";
