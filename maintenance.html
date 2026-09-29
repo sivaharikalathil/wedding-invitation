@@ -109,22 +109,22 @@
 
     .cat-illustration {
       display: block;
-      width: 200px;
-      height: 146px;
+      width: 260px;
+      height: 160px;
       margin: 0 auto 14px;
       overflow: visible;
     }
 
     .cat-tail {
       transform-box: fill-box;
-      transform-origin: 12% 54%;
-      animation: tailSway 2.2s ease-in-out infinite;
+      transform-origin: 50% 50%;
+      animation: tailSway 2.6s ease-in-out infinite;
     }
 
     .cat-head {
       transform-box: fill-box;
       transform-origin: 55% 82%;
-      animation: catIdle 2.4s ease-in-out infinite;
+      animation: catIdle 2.8s ease-in-out infinite;
     }
 
     .cat-outline {
@@ -135,8 +135,12 @@
       stroke-width: 3;
     }
 
+    .groom-cat .cat-outline { fill: #e9dcc9; }
+    .bride-cat .cat-outline { fill: #fff1e8; }
     .cat-inner-ear { fill: #dba5a0; }
     .cat-belly { fill: #fff8ee; }
+    .groom-cat .cat-belly,
+    .bride-cat .cat-belly { fill: #fff8ee; }
     .cat-face-line {
       fill: none;
       stroke: var(--maroon);
@@ -145,6 +149,11 @@
     }
     .cat-tail { fill: none; stroke-width: 8; }
     .cat-nose { fill: var(--maroon); }
+    .cat-tail-bride { animation-delay: -1.3s; }
+    .cat-head-bride { animation-delay: -1.4s; }
+    .groom-bowtie { fill: var(--maroon); stroke: #fff8ee; stroke-width: 1.5; }
+    .bride-flower { fill: #e9c66f; stroke: var(--maroon); stroke-width: 1.2; }
+    .bride-flower-center { fill: var(--maroon); }
     @keyframes tailSway {
       0%, 100% { transform: rotate(-3deg); }
       50% { transform: rotate(7deg); }
@@ -201,22 +210,50 @@
       <p class="status-label">A little pause while we prepare</p>
       <h1 id="maintenance-title">We'll be back soon</h1>
       <div class="ornament" aria-hidden="true"></div>
-      <svg class="cat-illustration" viewBox="0 0 220 155" role="img" aria-labelledby="cat-illustration-title">
-        <title id="cat-illustration-title">A little seated cat</title>
-        <ellipse cx="112" cy="139" rx="62" ry="7" fill="#b58b2a" opacity="0.16"></ellipse>
-        <path class="cat-tail cat-face-line" d="M145 112 C178 121 191 96 174 83 C163 75 151 82 157 91" stroke-width="8"></path>
-        <ellipse class="cat-outline" cx="119" cy="109" rx="39" ry="29"></ellipse>
-        <ellipse class="cat-belly" cx="128" cy="115" rx="20" ry="18"></ellipse>
-        <g class="cat-head">
-          <path class="cat-outline" d="M53 51 L50 22 Q50 16 56 20 L76 39 M87 39 L108 19 Q114 15 114 23 L109 54"></path>
-          <path class="cat-inner-ear" d="M56 27 L70 41 L58 44 Z M94 41 L108 27 L106 46 Z"></path>
-          <circle class="cat-outline" cx="81" cy="69" r="34"></circle>
-          <path class="cat-face-line" d="M65 65 Q70 71 75 65 M87 65 Q93 71 98 64"></path>
-          <path class="cat-nose" d="M78 73 Q82 69 86 73 Q82 78 78 73 Z"></path>
-          <path class="cat-face-line" d="M82 77 Q78 82 74 79 M82 77 Q86 82 90 79 M65 76 L48 73 M65 81 L49 84 M99 76 L114 72 M99 81 L114 84"></path>
+      <svg class="cat-illustration" viewBox="0 0 260 160" role="img" aria-labelledby="cat-illustration-title">
+        <title id="cat-illustration-title">A groom cat and bride cat sitting together</title>
+        <ellipse cx="130" cy="148" rx="91" ry="7" fill="#b58b2a" opacity="0.16"></ellipse>
+
+        <g class="cat groom-cat">
+          <path class="cat-tail cat-face-line" d="M91 118 C116 127 128 105 116 94 C109 88 102 92 106 99"></path>
+          <ellipse class="cat-outline" cx="78" cy="115" rx="34" ry="27"></ellipse>
+          <ellipse class="cat-belly" cx="83" cy="119" rx="18" ry="17"></ellipse>
+          <g class="cat-head">
+            <path class="cat-outline" d="M49 53 L46 28 Q46 22 52 26 L68 41 M87 41 L105 25 Q111 21 110 29 L107 54"></path>
+            <path class="cat-inner-ear" d="M52 32 L64 43 L54 46 Z M94 43 L104 32 L103 47 Z"></path>
+            <circle class="cat-outline" cx="78" cy="68" r="31"></circle>
+            <path class="cat-face-line" d="M63 65 Q68 71 73 65 M83 65 Q88 71 93 65"></path>
+            <path class="cat-nose" d="M75 73 Q78 70 81 73 Q78 77 75 73 Z"></path>
+            <path class="cat-face-line" d="M78 77 Q74 81 71 78 M78 77 Q82 81 85 78 M62 76 L48 73 M62 81 L49 84 M94 76 L107 73 M94 81 L106 84"></path>
+          </g>
+          <path class="groom-bowtie" d="M94 91 L85 86 L85 97 Z M94 91 L103 86 L103 97 Z"></path>
+          <circle cx="94" cy="91" r="2.5" fill="#e9c66f"></circle>
+          <ellipse class="cat-outline" cx="66" cy="132" rx="15" ry="8"></ellipse>
+          <ellipse class="cat-outline" cx="91" cy="131" rx="15" ry="8"></ellipse>
         </g>
-        <ellipse class="cat-outline" cx="108" cy="129" rx="16" ry="9"></ellipse>
-        <ellipse class="cat-outline" cx="139" cy="127" rx="16" ry="9"></ellipse>
+
+        <g class="cat bride-cat">
+          <path class="cat-tail cat-tail-bride cat-face-line" d="M196 118 C222 128 238 106 224 95 C217 89 211 94 215 100"></path>
+          <ellipse class="cat-outline" cx="177" cy="115" rx="34" ry="27"></ellipse>
+          <ellipse class="cat-belly" cx="172" cy="119" rx="18" ry="17"></ellipse>
+          <g class="cat-head cat-head-bride">
+            <path class="cat-outline" d="M148 53 L145 28 Q145 22 151 26 L167 41 M186 41 L204 25 Q210 21 209 29 L206 54"></path>
+            <path class="cat-inner-ear" d="M151 32 L163 43 L153 46 Z M193 43 L203 32 L202 47 Z"></path>
+            <circle class="cat-outline" cx="177" cy="68" r="31"></circle>
+            <path class="cat-face-line" d="M162 65 Q167 71 172 65 M182 65 Q187 71 192 65"></path>
+            <path class="cat-nose" d="M174 73 Q177 70 180 73 Q177 77 174 73 Z"></path>
+            <path class="cat-face-line" d="M177 77 Q173 81 170 78 M177 77 Q181 81 184 78 M161 76 L147 73 M161 81 L148 84 M193 76 L206 73 M193 81 L205 84"></path>
+          </g>
+          <g aria-hidden="true">
+            <circle class="bride-flower" cx="201" cy="48" r="4"></circle>
+            <circle class="bride-flower" cx="207" cy="52" r="4"></circle>
+            <circle class="bride-flower" cx="201" cy="56" r="4"></circle>
+            <circle class="bride-flower" cx="195" cy="52" r="4"></circle>
+            <circle class="bride-flower-center" cx="201" cy="52" r="2.3"></circle>
+          </g>
+          <ellipse class="cat-outline" cx="163" cy="132" rx="15" ry="8"></ellipse>
+          <ellipse class="cat-outline" cx="188" cy="131" rx="15" ry="8"></ellipse>
+        </g>
       </svg>
       <p>The groom is tweaking the code, the bride is checking the vibes, and the servers are just trying to survive. Check back soon—we promise it will be worth the wait (and fewer bugs)!</p>
     </section>
