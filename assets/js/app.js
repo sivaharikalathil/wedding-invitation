@@ -54,14 +54,12 @@ const firebaseReady = typeof firebase !== "undefined" && hasFirebaseConfig;
 
 if (firebaseReady && !firebase.apps.length) {
   firebase.initializeApp(FIREBASE_CONFIG);
-  console.log("Firebase initialized for wedding app.");
-} else if (!firebaseReady) {
-  console.warn("Firebase is not configured yet. Replace the placeholder values in FIREBASE_CONFIG in assets/js/app.js to enable shared wishes across devices.");
 }
+
 const db = firebaseReady ? firebase.firestore() : null;
 
-if (firebaseReady) {
-  console.log("Firestore object ready:", !!db);
+if (!firebaseReady) {
+  console.warn("Firebase is not configured yet. Please add your project config before enabling shared wishes across devices.");
 }
 
 // State Manager
@@ -345,29 +343,6 @@ END:VCALENDAR`;
    WISHES & BLESSINGS WALL
    ========================================================================== */
 function initWishes() {
-  if (!firebaseReady) {
-    renderWishes([]);
-    const container = document.getElementById("wishes-stream");
-    if (container) {
-      container.innerHTML = `
-        <div class="wish-item-card" style="border-color: rgba(212,175,55,0.45); background: rgba(255, 244, 214, 0.8);">
-          <div class="wish-header">
-            <span class="wish-author">Firebase setup required</span>
-          </div>
-          <p class="wish-text">Add your Firebase web config values in <strong>assets/js/app.js</strong> to enable wishes across devices.</p>
-        </div>
-      `;
-    }
-    const wishForm = document.getElementById("quick-wish-form");
-    if (wishForm) {
-      wishForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        showToast("Firebase is not configured yet. Please add your project config.");
-      });
-    }
-    return;
-  }
-
   renderWishes();
 
   const wishForm = document.getElementById("quick-wish-form");
@@ -385,16 +360,24 @@ function initWishes() {
       }
 
       try {
-        await db.collection("wishes").add({
+        if (!db) {
+          throw new Error("Firestore not initialized");
+        }
+
+        const wishesRef = db.collection("wishes");
+        await wishesRef.add({
           name: author,
           message: text,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
+
         wishForm.reset();
         showToast("Thank you for your warm blessing! 🌸");
       } catch (error) {
         console.error("Could not save wish:", error);
-        showToast("Could not save the blessing. Please check your Firebase setup.");
+        addWishToWall(author, text);
+        wishForm.reset();
+        showToast("Saved locally on this device. Please enable Firestore rules and database to sync across devices.");
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -404,26 +387,25 @@ function initWishes() {
     });
   }
 
-  console.log("Subscribing to Firestore wishes collection...");
-  db.collection("wishes")
-    .orderBy("createdAt", "desc")
-    .onSnapshot((snapshot) => {
-      console.log("Firestore snapshot received:", snapshot.docs.length, "documents");
-      const wishes = snapshot.docs.map((docSnap) => {
-        const data = docSnap.data();
-        return {
-          author: data.name || "Guest",
-          text: data.message || "",
-          time: data.createdAt && data.createdAt.toDate
-            ? data.createdAt.toDate().toLocaleDateString(undefined, { day: "numeric", month: "short" })
-            : "Just now"
-        };
+  if (db) {
+    db.collection("wishes")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const wishes = snapshot.docs.map((docSnap) => {
+          const data = docSnap.data();
+          return {
+            author: data.name || "Guest",
+            text: data.message || "",
+            time: data.createdAt && data.createdAt.toDate
+              ? data.createdAt.toDate().toLocaleDateString(undefined, { day: "numeric", month: "short" })
+              : "Just now"
+          };
+        });
+        renderWishes(wishes);
+      }, (error) => {
+        console.error("Could not load wishes from Firestore:", error);
       });
-      renderWishes(wishes);
-    }, (error) => {
-      console.error("Could not load wishes from Firestore:", error);
-      showToast("Could not load guestbook from Firestore. Please verify your rules and config.");
-    });
+  }
 }
 
 function getStoredWishes() {
