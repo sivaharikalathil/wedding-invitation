@@ -40,6 +40,21 @@ const DEFAULT_CONFIG = {
   hostPhone: "919876543210"
 };
 
+const FIREBASE_CONFIG = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const hasFirebaseConfig = !Object.values(FIREBASE_CONFIG).some(value => value.includes("YOUR_"));
+if (typeof firebase !== "undefined" && hasFirebaseConfig && !firebase.apps.length) {
+  firebase.initializeApp(FIREBASE_CONFIG);
+}
+const db = typeof firebase !== "undefined" && hasFirebaseConfig ? firebase.firestore() : null;
+
 // State Manager
 let weddingConfig = { ...DEFAULT_CONFIG };
 let isAudioPlaying = false;
@@ -325,16 +340,65 @@ function initWishes() {
 
   const wishForm = document.getElementById("quick-wish-form");
   if (wishForm) {
-    wishForm.addEventListener("submit", (e) => {
+    wishForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const author = document.getElementById("wish-author-input").value.trim();
       const text = document.getElementById("wish-text-input").value.trim();
       if (!author || !text) return;
 
-      addWishToWall(author, text);
-      wishForm.reset();
-      showToast("Thank you for your warm blessing! 🌸");
+      const submitBtn = wishForm.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Posting...';
+      }
+
+      try {
+        if (db && hasFirebaseConfig) {
+          await db.collection("wishes").add({
+            name: author,
+            message: text,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          wishForm.reset();
+          showToast("Thank you for your warm blessing! 🌸");
+        } else {
+          addWishToWall(author, text);
+          wishForm.reset();
+          showToast("Thank you for your warm blessing! 🌸");
+        }
+      } catch (error) {
+        console.error("Could not save wish:", error);
+        addWishToWall(author, text);
+        wishForm.reset();
+        showToast("Thank you for your blessing! The message was saved locally on this device. 🌸");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fa-solid fa-heart"></i> Post Blessing';
+        }
+      }
     });
+  }
+
+  if (db && hasFirebaseConfig) {
+    db.collection("wishes")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const wishes = snapshot.docs.map((docSnap) => {
+          const data = docSnap.data();
+          return {
+            author: data.name || "Guest",
+            text: data.message || "",
+            time: data.createdAt && data.createdAt.toDate
+              ? data.createdAt.toDate().toLocaleDateString(undefined, { day: "numeric", month: "short" })
+              : "Just now"
+          };
+        });
+        renderWishes(wishes);
+      }, (error) => {
+        console.error("Could not load wishes from Firestore:", error);
+        renderWishes(getStoredWishes());
+      });
   }
 }
 
@@ -370,15 +434,15 @@ function addWishToWall(author, text) {
     time: "Just now"
   });
   localStorage.setItem("kerala_wedding_wishes", JSON.stringify(wishes));
-  renderWishes();
+  renderWishes(wishes);
 }
 
-function renderWishes() {
+function renderWishes(wishes = getStoredWishes()) {
   const container = document.getElementById("wishes-stream");
   if (!container) return;
 
-  const wishes = getStoredWishes();
-  container.innerHTML = wishes.map(w => `
+  const list = Array.isArray(wishes) && wishes.length ? wishes : getStoredWishes();
+  container.innerHTML = list.map(w => `
     <div class="wish-item-card">
       <div class="wish-header">
         <span class="wish-author">${w.author}</span>
