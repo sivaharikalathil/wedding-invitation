@@ -1,13 +1,227 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Under Maintenance</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>We'll Be Back Soon | Vidya Weds Siva</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/decor/ganesha.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Outfit:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding-top: 100px; }
+    :root {
+      color-scheme: light;
+      --ivory: #faf7f0;
+      --paper: #fffdf9;
+      --maroon: #7d1929;
+      --gold: #b58b2a;
+      --green: #315b42;
+      --ink: #302a24;
+      --muted: #70675e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      border-top: 4px solid var(--maroon);
+      background: var(--ivory);
+      color: var(--ink);
+      font-family: "Outfit", sans-serif;
+    }
+
+    .page-header,
+    .page-footer {
+      width: min(100% - 48px, 1080px);
+      margin-inline: auto;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-block: 24px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      color: var(--maroon);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    main {
+      display: grid;
+      place-items: center;
+      padding: 64px 24px 80px;
+      text-align: center;
+    }
+
+    .message { max-width: 620px; }
+
+    .status-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 22px;
+      color: var(--green);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .status-label::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--maroon);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 3rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .ornament {
+      width: 56px;
+      height: 1px;
+      margin: 25px auto;
+      background: var(--gold);
+    }
+
+    .cat-illustration {
+      display: block;
+      width: 200px;
+      height: 146px;
+      margin: 0 auto 14px;
+      overflow: visible;
+    }
+
+    .cat-tail {
+      transform-box: fill-box;
+      transform-origin: 12% 54%;
+      animation: tailSway 2.2s ease-in-out infinite;
+    }
+
+    .cat-head {
+      transform-box: fill-box;
+      transform-origin: 55% 82%;
+      animation: catIdle 2.4s ease-in-out infinite;
+    }
+
+    .cat-outline {
+      fill: #f0dfca;
+      stroke: var(--maroon);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3;
+    }
+
+    .cat-inner-ear { fill: #dba5a0; }
+    .cat-belly { fill: #fff8ee; }
+    .cat-face-line {
+      fill: none;
+      stroke: var(--maroon);
+      stroke-linecap: round;
+      stroke-width: 2.5;
+    }
+    .cat-tail { fill: none; stroke-width: 8; }
+    .cat-nose { fill: var(--maroon); }
+    @keyframes tailSway {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(7deg); }
+    }
+
+    @keyframes catIdle {
+      0%, 100% { transform: rotate(0) translateY(0); }
+      50% { transform: rotate(-1deg) translateY(-2px); }
+    }
+
+    .message p {
+      margin: 0;
+      color: var(--muted);
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.08rem;
+      line-height: 1.85;
+    }
+
+    .page-footer {
+      padding-block: 18px 24px;
+      border-top: 1px solid rgba(181, 139, 42, 0.35);
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .page-header,
+      .page-footer { width: min(100% - 32px, 1080px); }
+
+      .page-header { padding-block: 18px; }
+
+      main { padding: 48px 24px 64px; }
+
+      h1 { font-size: 2.25rem; }
+
+      .message p { font-size: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cat-tail,
+      .cat-head { animation: none; }
+    }
   </style>
 </head>
 <body>
-  <h1>We'll be back soon!</h1>
-  <p>Vidya Weds Siva is undergoing scheduled maintenance. Please check back shortly.</p>
+  <header class="page-header">
+    <img class="brand-mark" src="assets/images/decor/ganesha.svg" alt="">
+    <span class="brand-name">Vidya Weds Siva</span>
+  </header>
+
+  <main>
+    <section class="message" aria-labelledby="maintenance-title">
+      <p class="status-label">A little pause while we prepare</p>
+      <h1 id="maintenance-title">We'll be back soon</h1>
+      <div class="ornament" aria-hidden="true"></div>
+      <svg class="cat-illustration" viewBox="0 0 220 155" role="img" aria-labelledby="cat-illustration-title">
+        <title id="cat-illustration-title">A little seated cat</title>
+        <ellipse cx="112" cy="139" rx="62" ry="7" fill="#b58b2a" opacity="0.16"></ellipse>
+        <path class="cat-tail cat-face-line" d="M145 112 C178 121 191 96 174 83 C163 75 151 82 157 91" stroke-width="8"></path>
+        <ellipse class="cat-outline" cx="119" cy="109" rx="39" ry="29"></ellipse>
+        <ellipse class="cat-belly" cx="128" cy="115" rx="20" ry="18"></ellipse>
+        <g class="cat-head">
+          <path class="cat-outline" d="M53 51 L50 22 Q50 16 56 20 L76 39 M87 39 L108 19 Q114 15 114 23 L109 54"></path>
+          <path class="cat-inner-ear" d="M56 27 L70 41 L58 44 Z M94 41 L108 27 L106 46 Z"></path>
+          <circle class="cat-outline" cx="81" cy="69" r="34"></circle>
+          <path class="cat-face-line" d="M65 65 Q70 71 75 65 M87 65 Q93 71 98 64"></path>
+          <path class="cat-nose" d="M78 73 Q82 69 86 73 Q82 78 78 73 Z"></path>
+          <path class="cat-face-line" d="M82 77 Q78 82 74 79 M82 77 Q86 82 90 79 M65 76 L48 73 M65 81 L49 84 M99 76 L114 72 M99 81 L114 84"></path>
+        </g>
+        <ellipse class="cat-outline" cx="108" cy="129" rx="16" ry="9"></ellipse>
+        <ellipse class="cat-outline" cx="139" cy="127" rx="16" ry="9"></ellipse>
+      </svg>
+      <p>The groom is tweaking the code, the bride is checking the vibes, and the servers are just trying to survive. Check back soon—we promise it will be worth the wait (and fewer bugs)!</p>
+    </section>
+  </main>
+
+  <footer class="page-footer">With love, Siva &amp; Vidya</footer>
 </body>
 </html>
