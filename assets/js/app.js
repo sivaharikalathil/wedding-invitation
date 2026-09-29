@@ -69,6 +69,7 @@ let audioContext = null;
 let synthOscillators = [];
 let petalsAnimationId = null;
 let isPetalsEnabled = true;
+let weddingAudio = null;
 
 // Initialize on DOM Ready
 document.addEventListener("DOMContentLoaded", () => {
@@ -79,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initWishes();
   initVenueTabs();
   initCustomizer();
+  startWeddingMelody();
 });
 
 /* ==========================================================================
@@ -160,90 +162,49 @@ function toggleAudio() {
 }
 window.toggleAudio = toggleAudio;
 
-/**
- * Traditional Indian Raag Mohanam / Flute & Tanpura Drone Synthesizer
- * Built using Web Audio API for 100% offline, zero-asset, high-fidelity ambient music!
- */
+function initializeWeddingAudio() {
+  if (!weddingAudio) {
+    weddingAudio = new Audio("assets/audio/Seetha Kalyana Vaibhogame Agam Violin Harisankar Varma Walk of the Bride @agamtheband.mp3");
+    weddingAudio.loop = true;
+    weddingAudio.volume = 0.28;
+    weddingAudio.preload = "auto";
+  }
+}
+
 function startWeddingMelody() {
   try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!audioContext) {
-      audioContext = new AudioContext();
-    }
-    if (audioContext.state === "suspended") {
-      audioContext.resume();
-    }
-
-    stopWeddingMelody(); // Clear any existing oscillators
-    isAudioPlaying = true;
+    initializeWeddingAudio();
 
     const musicBtn = document.getElementById("music-toggle-btn");
-    if (musicBtn) musicBtn.classList.add("playing");
 
-    // Master Volume
-    const masterGain = audioContext.createGain();
-    masterGain.gain.setValueAtTime(0.08, audioContext.currentTime);
-    masterGain.connect(audioContext.destination);
-
-    // 1. Tanpura Sa-Pa Drone (Fundamental C# / 138.59 Hz and G# / 207.65 Hz)
-    const droneFreqs = [138.59, 207.65, 277.18];
-    droneFreqs.forEach(freq => {
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(freq, audioContext.currentTime);
-
-      gain.gain.setValueAtTime(0.18, audioContext.currentTime);
-      osc.connect(gain);
-      gain.connect(masterGain);
-      osc.start();
-      synthOscillators.push(osc);
-    });
-
-    // 2. Gentle Carnatic Flute Arpeggio (Raag Mohanam: Sa Ri Ga Pa Dha Sa)
-    // Notes in Hz: C#4 (277.18), D#4 (311.13), F4 (349.23), G#4 (415.30), A#4 (466.16), C#5 (554.37)
-    const mohanamScale = [277.18, 311.13, 349.23, 415.30, 466.16, 554.37, 466.16, 415.30, 349.23];
-    let noteIdx = 0;
-
-    const playNextNote = () => {
-      if (!isAudioPlaying || !audioContext) return;
-
-      const noteOsc = audioContext.createOscillator();
-      const noteGain = audioContext.createGain();
-      noteOsc.type = "triangle"; // Warm flute timbre
-
-      const freq = mohanamScale[noteIdx % mohanamScale.length];
-      noteIdx++;
-
-      noteOsc.frequency.setValueAtTime(freq, audioContext.currentTime);
-
-      // Flute envelope (Soft attack, gentle sustain, breathy decay)
-      const now = audioContext.currentTime;
-      noteGain.gain.setValueAtTime(0.001, now);
-      noteGain.gain.linearRampToValueAtTime(0.25, now + 0.35);
-      noteGain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
-
-      noteOsc.connect(noteGain);
-      noteGain.connect(masterGain);
-
-      noteOsc.start(now);
-      noteOsc.stop(now + 1.8);
-
-      // Schedule next note with a gentle sway
-      const delay = [1400, 1800, 2200, 1600][noteIdx % 4];
-      if (isAudioPlaying) {
-        setTimeout(playNextNote, delay);
+    if (weddingAudio) {
+      const playPromise = weddingAudio.play();
+      if (playPromise && typeof playPromise.then === "function") {
+        playPromise.then(() => {
+          isAudioPlaying = true;
+          if (musicBtn) musicBtn.classList.add("playing");
+        }).catch(() => {
+          isAudioPlaying = false;
+          if (musicBtn) musicBtn.classList.remove("playing");
+        });
+      } else {
+        isAudioPlaying = true;
+        if (musicBtn) musicBtn.classList.add("playing");
       }
-    };
-
-    playNextNote();
+    }
   } catch (err) {
-    console.warn("Web Audio could not start automatically:", err);
+    console.warn("Wedding audio could not start:", err);
   }
 }
 
 function stopWeddingMelody() {
   isAudioPlaying = false;
+
+  if (weddingAudio) {
+    weddingAudio.pause();
+    weddingAudio.currentTime = 0;
+  }
+
   synthOscillators.forEach(osc => {
     try {
       osc.stop();
