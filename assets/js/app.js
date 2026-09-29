@@ -54,11 +54,14 @@ const firebaseReady = typeof firebase !== "undefined" && hasFirebaseConfig;
 
 if (firebaseReady && !firebase.apps.length) {
   firebase.initializeApp(FIREBASE_CONFIG);
+  console.log("Firebase initialized for wedding app.");
+} else if (!firebaseReady) {
+  console.warn("Firebase is not configured yet. Replace the placeholder values in FIREBASE_CONFIG in assets/js/app.js to enable shared wishes across devices.");
 }
 const db = firebaseReady ? firebase.firestore() : null;
 
-if (!firebaseReady) {
-  console.warn("Firebase is not configured yet. Replace the placeholder values in FIREBASE_CONFIG in assets/js/app.js to enable shared wishes across devices.");
+if (firebaseReady) {
+  console.log("Firestore object ready:", !!db);
 }
 
 // State Manager
@@ -401,9 +404,11 @@ function initWishes() {
     });
   }
 
+  console.log("Subscribing to Firestore wishes collection...");
   db.collection("wishes")
     .orderBy("createdAt", "desc")
     .onSnapshot((snapshot) => {
+      console.log("Firestore snapshot received:", snapshot.docs.length, "documents");
       const wishes = snapshot.docs.map((docSnap) => {
         const data = docSnap.data();
         return {
