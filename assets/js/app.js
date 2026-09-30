@@ -158,7 +158,7 @@ function initCoverSwipe() {
   let touchStart = null;
 
   overlay.addEventListener("touchstart", event => {
-    if (event.touches.length !== 1) {
+    if (event.touches.length !== 1 || !document.body.classList.contains("cover-active")) {
       touchStart = null;
       return;
     }
@@ -169,6 +169,19 @@ function initCoverSwipe() {
     };
   }, { passive: true });
 
+  overlay.addEventListener("touchmove", event => {
+    if (!touchStart || event.touches.length !== 1 || !document.body.classList.contains("cover-active")) return;
+
+    const touch = event.touches[0];
+    const upwardDistance = touchStart.y - touch.clientY;
+    const horizontalDistance = Math.abs(touch.clientX - touchStart.x);
+    if (upwardDistance <= 0 || upwardDistance <= horizontalDistance) return;
+
+    event.preventDefault();
+    overlay.classList.add("dragging");
+    overlay.style.setProperty("--cover-drag-offset", `${-Math.min(upwardDistance, window.innerHeight)}px`);
+  }, { passive: false });
+
   overlay.addEventListener("touchend", event => {
     if (!touchStart || !document.body.classList.contains("cover-active")) return;
 
@@ -178,18 +191,25 @@ function initCoverSwipe() {
     touchStart = null;
 
     if (verticalDistance > 60 && verticalDistance > horizontalDistance) {
+      overlay.classList.remove("dragging");
       window.openInvitation();
+    } else {
+      overlay.style.setProperty("--cover-drag-offset", "0px");
+      overlay.classList.remove("dragging");
     }
   }, { passive: true });
 
   overlay.addEventListener("touchcancel", () => {
     touchStart = null;
+    overlay.style.setProperty("--cover-drag-offset", "0px");
+    overlay.classList.remove("dragging");
   }, { passive: true });
 }
 
 window.openInvitation = function() {
   const overlay = document.getElementById("cover-overlay");
   if (overlay) {
+    overlay.classList.remove("dragging");
     overlay.classList.add("opened");
   }
   document.body.classList.remove("cover-active");

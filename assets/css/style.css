@@ -221,6 +221,11 @@ body.cover-active {
   background: radial-gradient(circle at center, #261713 0%, #120908 100%);
   transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
   overflow: hidden;
+  transform: translateY(var(--cover-drag-offset, 0px));
+}
+
+#cover-overlay.dragging {
+  transition: none;
 }
 
 #cover-overlay.opened {
