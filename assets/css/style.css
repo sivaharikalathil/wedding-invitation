@@ -434,6 +434,7 @@ body.cover-active {
   gap: 12px;
 }
 
+.cover-active #music-toggle-btn,
 .cover-active #petals-toggle-btn {
   display: none;
 }

@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initWishes();
   initVenueTabs();
   initCustomizer();
-  startWeddingMelody();
 });
 
 /* ==========================================================================
@@ -257,17 +256,20 @@ function initCountdown() {
 /* ==========================================================================
    CALENDAR SYNC (Google Calendar & iCal .ics download)
    ========================================================================== */
-window.addToGoogleCalendar = function() {
-  const title = encodeURIComponent(`${weddingConfig.groomName} & ${weddingConfig.brideName}'s Wedding`);
-  const details = encodeURIComponent(
-    `Traditional Kerala Hindu Wedding Ceremony (Thalikettu Muhurtham & Grand Sadhya).\n` +
-    `Muhurtham: ${weddingConfig.muhurthamTime}\n` +
-    `Venue: ${weddingConfig.venueMandapam}, ${weddingConfig.venueMandapamAddress}`
-  );
-  const location = encodeURIComponent(`${weddingConfig.venueMandapam}, ${weddingConfig.venueMandapamAddress}`);
-  
-  // Format 20261122T040000Z to 20261122T100000Z (UTC for 9:30 AM to 3:30 PM IST)
-  const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20261122T040000Z/20261122T100000Z&details=${details}&location=${location}`;
+window.addToGoogleCalendar = function(eventType = "wedding") {
+  const isReception = eventType === "reception";
+  const venue = isReception ? weddingConfig.venueReception : weddingConfig.venueMandapam;
+  const address = isReception ? weddingConfig.venueReceptionAddress : weddingConfig.venueMandapamAddress;
+  const title = encodeURIComponent(`${weddingConfig.groomName} & ${weddingConfig.brideName}'s ${isReception ? "Wedding Reception" : "Wedding"}`);
+  const description = isReception
+    ? `Wedding reception celebration.\nTime: 06:00 PM - 09:00 PM\nVenue: ${venue}, ${address}`
+    : `Traditional Kerala Hindu Wedding Ceremony (Thalikettu Muhurtham & Grand Sadhya).\nMuhurtham: ${weddingConfig.muhurthamTime}\nVenue: ${venue}, ${address}`;
+  const details = encodeURIComponent(description);
+  const location = encodeURIComponent(`${venue}, ${address}`);
+  const dates = isReception
+    ? "20261122T123000Z/20261122T153000Z"
+    : "20261122T040000Z/20261122T100000Z";
+  const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
   window.open(gcalUrl, "_blank");
 };
 
