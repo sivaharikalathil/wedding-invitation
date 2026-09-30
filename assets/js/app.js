@@ -17,12 +17,12 @@
 const DEFAULT_CONFIG = {
   groomName: "Siva Hari",
   groomParents: "Sri. Harikuttan K & Smt. Vanaja Hari",
-  groomPlace: '"Kalathikunnel", Kidangoor, Kottayam, Kerala',
+  groomPlace: 'Kalathikunnel, Kidangoor, Kottayam, Kerala',
   groomBio: "Test Analyst at Edgeverve Systems",
 
   brideName: "Vidya Vijayan",
   brideParents: "Sri. Vijayan P.K & Smt. Mallika Vijayan",
-  bridePlace: '"Vishnubhavan", Pullanadu, Thottackad, Kottayam, Kerala',
+  bridePlace: 'Vishnubhavan, Pullanadu, Thottackad, Kottayam, Kerala',
   brideBio: "QA Engineer at Speridian Technologies",
 
   weddingDate: "2026-11-22T09:30:00+05:30",
@@ -75,6 +75,7 @@ let weddingAudio = null;
 document.addEventListener("DOMContentLoaded", () => {
   loadStoredConfig();
   initURLPersonalization();
+  initCoverSwipe();
   initCountdown();
   initPetalsCanvas();
   initWishes();
@@ -109,10 +110,22 @@ function applyConfigToDOM() {
   document.querySelectorAll(".bride-name-text").forEach(el => el.textContent = weddingConfig.brideName);
   
   const groomEl = document.getElementById("conf-groom-parents");
-  if (groomEl) groomEl.textContent = weddingConfig.groomParents + ", " + weddingConfig.groomPlace;
+  if (groomEl) {
+    groomEl.replaceChildren(
+      document.createTextNode(weddingConfig.groomParents),
+      document.createElement("br"),
+      document.createTextNode(weddingConfig.groomPlace)
+    );
+  }
 
   const brideEl = document.getElementById("conf-bride-parents");
-  if (brideEl) brideEl.textContent = weddingConfig.brideParents + ", " + weddingConfig.bridePlace;
+  if (brideEl) {
+    brideEl.replaceChildren(
+      document.createTextNode(weddingConfig.brideParents),
+      document.createElement("br"),
+      document.createTextNode(weddingConfig.bridePlace)
+    );
+  }
 
   const upiEl = document.getElementById("conf-upi-id");
   if (upiEl) upiEl.textContent = weddingConfig.upiId;
@@ -138,6 +151,42 @@ function initURLPersonalization() {
 /* ==========================================================================
    OPEN INVITATION & AUDIO ENGINE
    ========================================================================== */
+function initCoverSwipe() {
+  const overlay = document.getElementById("cover-overlay");
+  if (!overlay) return;
+
+  let touchStart = null;
+
+  overlay.addEventListener("touchstart", event => {
+    if (event.touches.length !== 1) {
+      touchStart = null;
+      return;
+    }
+
+    touchStart = {
+      x: event.touches[0].clientX,
+      y: event.touches[0].clientY
+    };
+  }, { passive: true });
+
+  overlay.addEventListener("touchend", event => {
+    if (!touchStart || !document.body.classList.contains("cover-active")) return;
+
+    const touch = event.changedTouches[0];
+    const verticalDistance = touchStart.y - touch.clientY;
+    const horizontalDistance = Math.abs(touch.clientX - touchStart.x);
+    touchStart = null;
+
+    if (verticalDistance > 60 && verticalDistance > horizontalDistance) {
+      window.openInvitation();
+    }
+  }, { passive: true });
+
+  overlay.addEventListener("touchcancel", () => {
+    touchStart = null;
+  }, { passive: true });
+}
+
 window.openInvitation = function() {
   const overlay = document.getElementById("cover-overlay");
   if (overlay) {
