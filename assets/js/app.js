@@ -76,12 +76,85 @@ document.addEventListener("DOMContentLoaded", () => {
   loadStoredConfig();
   initURLPersonalization();
   initCoverSwipe();
+  initEngagementGallery();
   initCountdown();
   initPetalsCanvas();
   initWishes();
   initVenueTabs();
   initCustomizer();
 });
+
+function initEngagementGallery() {
+  const gallery = document.getElementById("engagement-gallery");
+  const viewer = document.getElementById("engagement-viewer");
+  if (!gallery || !viewer) return;
+
+  const photoButtons = [...gallery.querySelectorAll(".engagement-photo")];
+  const viewerImage = document.getElementById("engagement-viewer-image");
+  const viewerCount = document.getElementById("engagement-viewer-count");
+  const closeButton = viewer.querySelector(".engagement-viewer-close");
+  const previousButton = viewer.querySelector(".engagement-viewer-nav.previous");
+  const nextButton = viewer.querySelector(".engagement-viewer-nav.next");
+  const previousSlideButton = document.getElementById("engagement-scroll-previous");
+  const nextSlideButton = document.getElementById("engagement-scroll-next");
+  const slideCount = document.getElementById("engagement-slide-count");
+  let currentIndex = 0;
+
+  function getCurrentPhotoIndex() {
+    const galleryLeft = gallery.getBoundingClientRect().left;
+    return photoButtons.reduce((nearest, button, index) => {
+      const nearestDistance = Math.abs(photoButtons[nearest].getBoundingClientRect().left - galleryLeft);
+      const buttonDistance = Math.abs(button.getBoundingClientRect().left - galleryLeft);
+      return buttonDistance < nearestDistance ? index : nearest;
+    }, 0);
+  }
+
+  function updateSlideCount() {
+    const nearestIndex = getCurrentPhotoIndex();
+    slideCount.textContent = `${String(nearestIndex + 1).padStart(2, "0")} / ${String(photoButtons.length).padStart(2, "0")}`;
+    previousSlideButton.disabled = nearestIndex === 0;
+    nextSlideButton.disabled = nearestIndex === photoButtons.length - 1;
+  }
+
+  function scrollGallery(direction) {
+    const nextIndex = Math.max(0, Math.min(photoButtons.length - 1, getCurrentPhotoIndex() + direction));
+    photoButtons[nextIndex].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+  }
+
+  function showPhoto(index) {
+    currentIndex = (index + photoButtons.length) % photoButtons.length;
+    const photo = photoButtons[currentIndex].querySelector("img");
+    viewerImage.src = photo.src;
+    viewerImage.alt = photo.alt;
+    viewerCount.textContent = `${currentIndex + 1} / ${photoButtons.length}`;
+  }
+
+  photoButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      showPhoto(index);
+      viewer.showModal();
+    });
+  });
+
+  previousSlideButton.addEventListener("click", () => scrollGallery(-1));
+  nextSlideButton.addEventListener("click", () => scrollGallery(1));
+  gallery.addEventListener("scroll", updateSlideCount, { passive: true });
+  window.addEventListener("resize", updateSlideCount);
+  updateSlideCount();
+
+  closeButton.addEventListener("click", () => viewer.close());
+  previousButton.addEventListener("click", () => showPhoto(currentIndex - 1));
+  nextButton.addEventListener("click", () => showPhoto(currentIndex + 1));
+
+  viewer.addEventListener("click", event => {
+    if (event.target === viewer) viewer.close();
+  });
+
+  viewer.addEventListener("keydown", event => {
+    if (event.key === "ArrowLeft") showPhoto(currentIndex - 1);
+    if (event.key === "ArrowRight") showPhoto(currentIndex + 1);
+  });
+}
 
 /* ==========================================================================
    CONFIG & STORAGE
