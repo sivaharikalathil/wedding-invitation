@@ -515,26 +515,14 @@ function initWishes() {
 
 function getStoredWishes() {
   const stored = localStorage.getItem("kerala_wedding_wishes");
-  if (stored) {
-    try { return JSON.parse(stored); } catch (e) { return []; }
+  if (!stored) return [];
+
+  try {
+    const wishes = JSON.parse(stored);
+    return Array.isArray(wishes) ? wishes : [];
+  } catch (e) {
+    return [];
   }
-  return [
-    {
-      author: "Venu Uncle & Geetha Aunty",
-      text: "May your lives be blessed with happiness, prosperous health, and divine togetherness like Lord Shiva & Parvathy!",
-      time: "2 days ago"
-    },
-    {
-      author: "Siddharth & Meera",
-      text: "Congratulations to the most graceful couple! Looking forward to dancing and celebrating with you in Kochi!",
-      time: "Yesterday"
-    },
-    {
-      author: "Ammukutty Amma",
-      text: "നിങ്ങൾ രണ്ടുപേർക്കും ആയുരാരോഗ്യസൗഖ്യങ്ങളും സർവ്വ ഐശ്വര്യങ്ങളും നിറഞ്ഞ ദാമ്പത്യജീവിതം നേരുന്നു. മംഗളാശംസകൾ!",
-      time: "Today"
-    }
-  ];
 }
 
 function addWishToWall(author, text) {
@@ -548,11 +536,16 @@ function addWishToWall(author, text) {
   renderWishes(wishes);
 }
 
-function renderWishes(wishes = getStoredWishes()) {
+function renderWishes(wishes) {
   const container = document.getElementById("wishes-stream");
   if (!container) return;
 
-  const list = Array.isArray(wishes) && wishes.length ? wishes : getStoredWishes();
+  const list = Array.isArray(wishes) ? wishes : getStoredWishes();
+  if (!list.length) {
+    container.innerHTML = '<p class="wishes-empty-state">No messages yet. Be the first to leave a wish.</p>';
+    return;
+  }
+
   container.innerHTML = list.map(w => `
     <div class="wish-item-card">
       <div class="wish-header">
