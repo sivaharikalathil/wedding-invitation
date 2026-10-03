@@ -969,7 +969,9 @@ body.cover-active {
   color: var(--text-light);
   line-height: 1.6;
   margin-bottom: 16px;
-  font-style: italic;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .couple-social-link {
